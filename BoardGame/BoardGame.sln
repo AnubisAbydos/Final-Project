@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "BoardGame", "BoardGame\BoardGame.pyproj", "{42BAD1F6-BD93-4452-B475-BA3D612B5ACE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{42BAD1F6-BD93-4452-B475-BA3D612B5ACE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42BAD1F6-BD93-4452-B475-BA3D612B5ACE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B4556DF1-4628-4B62-9DF1-923ABC24B2CA}
+	EndGlobalSection
+EndGlobal
