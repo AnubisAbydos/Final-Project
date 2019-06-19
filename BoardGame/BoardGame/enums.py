@@ -26,3 +26,10 @@ class RowAlpha(Enum):
     H = 7
     I = 8
     J = 9
+
+class PersonalityTypes(Enum):
+    Researcher = 0
+    Turtle = 1
+    CenterDom = 2
+    BaseRusher = 3
+    DefenseWebber = 4

@@ -10,12 +10,14 @@ from enums import *
 
 class Tile(object):
     def __init__(self):
+        # TODO Add Captured base property and change base capture to only take the captured base or all bases.
         self.color = TeamColor.NONE
         self.troopCount = 0
         self.isBase = False
         self.isResearch = False
         self.isVictoryPoint = False
 
+    # TODO Remove all Getters and Setters (replace with properities)
     def getTeamColor(self):
         return self.color
 

@@ -45,6 +45,7 @@ class Board(object):
         self.boardGrid[4][5].setResearch()
         self.boardGrid[5][4].setResearch()
 
+    # TODO Remove all Getters and Setters (replace with properities)
     def getBoardGrid(self):
         return self.boardGrid
 
@@ -57,7 +58,7 @@ class Board(object):
     def baseCapture(self, transferFrom, transferTo):
         for i in range(10):
             for j in range(10):
-                if self.boardGrid[i][j].getTeamColor == transferFrom:
+                if self.boardGrid[i][j].getTeamColor() == transferFrom:
                     if self.boardGrid[i][j].getIsBase():
                         self.boardGrid[i][j].setCapturedBase(transferTo)
                     else:

@@ -21,6 +21,12 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AIController.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InfoObjects.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="board.py">
       <SubType>Code</SubType>
     </Compile>

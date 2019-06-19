@@ -7,23 +7,46 @@ Python Version: 3.6
 """
 
 from os import system, name
+import time
 
 import tile
 import board
 import player
-import time
+import InfoObjects
 from enums import *
 
 class Game(object):
     def __init__(self):
         self.board = board.Board()
-        self.redPlayer = player.PlayerInfo(TeamColor.RED, False)
-        self.bluePlayer = player.PlayerInfo(TeamColor.BLUE, False)
-        self.yellowPlayer = player.PlayerInfo(TeamColor.YELLOW, False)
-        self.greenPlayer = player.PlayerInfo(TeamColor.GREEN, False)
+        self.redPlayer = player.PlayerInfo(TeamColor.RED)
+        self.bluePlayer = player.PlayerInfo(TeamColor.BLUE)
+        self.yellowPlayer = player.PlayerInfo(TeamColor.YELLOW)
+        self.greenPlayer = player.PlayerInfo(TeamColor.GREEN)
+        self.allResearch = InfoObjects.AllResearch()
 
     def play(self):
+        self.assignAIPlayers(True)
         self.gameLoop()
+
+    def assignAIPlayers(self, standard):
+        if standard:
+            self.redPlayer.assignAI()
+            self.bluePlayer.assignAI()
+            self.yellowPlayer.assignAI()
+            self.greenPlayer.assignAI()
+        else:
+            isAI = input("Is RedPlayer AI? (0, 1): ")
+            if isAI == "1":
+                self.redPlayer.assignAI()
+            isAI = input("Is BluePlayer AI? (0, 1): ")
+            if isAI == "1":
+                self.bluePlayer.assignAI()
+            isAI = input("Is YellowPlayer AI? (0, 1): ")
+            if isAI == "1":
+                self.yellowPlayer.assignAI()
+            isAI = input("Is GreenPlayer AI? (0, 1): ")
+            if isAI == "1":
+                self.greenPlayer.assignAI()
         
     def gameLoop(self):
         done = False
@@ -35,44 +58,54 @@ class Game(object):
                     self.aiTurn(self.redPlayer)
                 else:
                     self.playerTurn(self.redPlayer)
+                self.allResearch.redResearch = self.redPlayer.research
                 if self.redPlayer.getHasWon():
                     done = True
                     winningPlayer = self.redPlayer
                     break
+
             if self.yellowPlayer.getIsAlive():
                 self.board.applyAttrition(self.yellowPlayer)
-                if self.yellowPlayer.getIsNPC():
+                if self.yellowPlayer.isNPC:
                     self.aiTurn(self.yellowPlayer)
                 else:
                     self.playerTurn(self.yellowPlayer)
+                self.allResearch.yellowResearch = self.yellowPlayer.research
                 if self.yellowPlayer.getHasWon():
                     done = True
                     winningPlayer = self.yellowPlayer
                     break
+
             if self.bluePlayer.getIsAlive():
                 self.board.applyAttrition(self.bluePlayer)
                 if self.bluePlayer.getIsNPC():
                     self.aiTurn(self.bluePlayer)
                 else:
                     self.playerTurn(self.bluePlayer)
+                self.allResearch.blueResearch = self.bluePlayer.research
                 if self.bluePlayer.getHasWon():
                     done = True
                     winningPlayer = self.bluePlayer
                     break
+                
             if self.greenPlayer.getIsAlive():
                 self.board.applyAttrition(self.greenPlayer)
                 if self.greenPlayer.getIsNPC():
                     self.aiTurn(self.greenPlayer)
                 else:
                     self.playerTurn(self.greenPlayer)
+                self.allResearch.greenResearch = self.greenPlayer.research
                 if self.greenPlayer.getHasWon():
                     done = True
                     winningPlayer = self.greenPlayer
-                    break
+                
+        
+        # Victory
         self.clearScreen()
         print("Victory! Congratulations...")
         winningPlayer.displayName()
 
+    # TODO refactor to AllResearch object
     def displayAllResearch(self):
         self.redPlayer.displayResearch(False, False)
         self.bluePlayer.displayResearch(False, False)
@@ -216,8 +249,14 @@ class Game(object):
             else:
                 print("Invalid Input", end = "\n\n")
 
-    def aiTurn(self):
-        pass
+    def aiTurn(self, player):
+        aiTurnInstructions = InfoObjects.AITurn()
+        aiTurnInstructions = player.aiController.aiTurn(self.allResearch, self.board)
+        print(player.aiController.personality.name)
+        print(aiTurnInstructions.stageOne)
+        print(aiTurnInstructions.researchChoice)
+        print(aiTurnInstructions.reinforcePos)
+        input("Press 'Enter' to end turn...")
 
     def processGridInput(self, selectedSquareOne, selectedSquareTwo, player, forReinforcement, forAttack, forMovement):
         success = False

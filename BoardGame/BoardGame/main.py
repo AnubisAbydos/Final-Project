@@ -5,9 +5,9 @@ Author: Lex Hall
 Last Updated: 
 Python Version: 3.6
 """
+import os
 
 import game
-import os
 
 def main():
     os.system("mode con cols=100 lines=50")
