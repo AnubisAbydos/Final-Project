@@ -1,53 +1,35 @@
 """
-Project Name: 
+Project Name: BoardGame
 File Name: player.py
 Author: Lex Hall
-Last Updated: 
+Last Updated: 7/29/19
 Python Version: 3.6
 """
 
 from random import *
 
 import AIController
-import InfoObjects
+import infoObjects
 
 class PlayerInfo(object):
     def __init__(self, color):
         self.isNPC = False
         self.isAlive = True
         self.color = color
-        self.commandPoints = 0
-        self.research = InfoObjects.PlayerResearch()
+        self.victoryPoints = 0
+        self.research = infoObjects.PlayerResearch()
         self.aiController = None
-
-    # TODO Remove all Getters and Setters (replace with properities)
-    def getIsNPC(self):
-        return self.isNPC
-
-    def getTeamColor(self):
-        return self.color
 
     def getReinforcements(self):
         return 5 * self.research.recruitmentResearch
 
-    def getDeployment(self):
-        return self.research.deploymentResearch
-
-    def getIsAlive(self):
-        return self.isAlive
-
     def getHasWon(self):
-        return self.commandPoints >= 5
+        return self.victoryPoints >= 5
 
-    def kill(self):
-        self.isAlive = False
-
+    ### Assigns isNPC true and builds a controller
     def assignAI(self):
         self.isNPC = True
         self.aiController = AIController.AIController(self.color)
-
-    def gainCommandPoints(self, points):
-        self.commandPoints += points
 
     def takeResearchCard(self):
         psuedoRandom = randint(1, 100)

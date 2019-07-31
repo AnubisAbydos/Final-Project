@@ -1,8 +1,8 @@
 """
-Project Name: 
+Project Name: BoardGame
 File Name: enums.py
 Author: Lex Hall
-Last Updated: 
+Last Updated: 7/29/19
 Python Version: 3.6
 """
 
@@ -15,6 +15,9 @@ class TeamColor(Enum):
     BLUE = 3
     GREEN = 4
 
+''' ENUM RowAlpha
+Stores the alpha to num conversions for interpeting board locations
+'''
 class RowAlpha(Enum):
     A = 0
     B = 1
@@ -33,3 +36,11 @@ class PersonalityTypes(Enum):
     CenterDom = 2
     BaseRusher = 3
     DefenseWebber = 4
+
+class GoalStatement(Enum):
+    NONE = 0
+    CenterResearch = 1
+    CenterVictory = 2
+    DefenseLocation = 3
+    BaseAttack = 4
+    DoomStack = 5

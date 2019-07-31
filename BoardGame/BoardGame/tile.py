@@ -1,8 +1,8 @@
 """
-Project Name: 
+Project Name: BoardGame
 File Name: tile.py
 Author: Lex Hall
-Last Updated: 
+Last Updated: 7/29/19
 Python Version: 3.6
 """
 
@@ -10,23 +10,14 @@ from enums import *
 
 class Tile(object):
     def __init__(self):
-        # TODO Add Captured base property and change base capture to only take the captured base or all bases.
         self.color = TeamColor.NONE
         self.troopCount = 0
         self.isBase = False
+        self.isCaptured = False
         self.isResearch = False
         self.isVictoryPoint = False
 
-    # TODO Remove all Getters and Setters (replace with properities)
-    def getTeamColor(self):
-        return self.color
-
-    def getIsBase(self):
-        return self.isBase
-
-    def getTroopCount(self):
-        return self.troopCount
-
+    ### Sets game starting base conditions
     def setBase(self, color):
         self.color = color
         self.isBase = True
@@ -34,13 +25,8 @@ class Tile(object):
 
     def setCapturedBase(self, color):
         self.color = color
+        self.isCaptured = True
         self.troopCount = 0
-
-    def setResearch(self):
-        self.isResearch = True
-
-    def setVictoryPoint(self):
-        self.isVictoryPoint = True
 
     def addTroops(self, troopsToAdd, color):
             self.color = color
@@ -53,27 +39,31 @@ class Tile(object):
         if self.troopCount == 0 and not self.isBase:
             self.color = TeamColor.NONE
 
+    ### Handles the attrition of each tile awarding research or victory as required
     def applyAttrition(self, player):
         if self.troopCount > 0:
             self.removeTroops(1)
-            if self.color == player.getTeamColor():
+            if self.color == player.color:
                 if self.isResearch:
                     player.takeResearchCard()
                 else:
-                    player.gainCommandPoints(1)
+                    player.victoryPoints += 1
 
+    ### Used for printing board
     def printColor(self):
         if self.color == TeamColor.NONE:
             print("        ", end = "")
         else:
             print('{:^8s}'.format(self.color.name), end = "")
 
+    ### Used for printing board
     def printSoldier(self):
         if self.color == TeamColor.NONE:
             print("        ", end = "")
         else:
             print('{:^8d}'.format(self.troopCount), end = "")
 
+    ### Used for printing board
     def printSpecial(self):
         if self.isResearch:
             print('{:^8s}'.format("RESEARCH"), end = "")
@@ -84,6 +74,7 @@ class Tile(object):
         else:
             print("        ", end = "")
 
+    ### Used for printing board
     def printTile(self, isBottom, isRight):
         if self.color == TeamColor.NONE:
             for i in range(8):

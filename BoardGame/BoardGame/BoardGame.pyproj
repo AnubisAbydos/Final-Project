@@ -24,7 +24,7 @@
     <Compile Include="AIController.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="InfoObjects.py">
+    <Compile Include="infoObjects.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="board.py">

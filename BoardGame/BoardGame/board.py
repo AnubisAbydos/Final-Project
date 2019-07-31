@@ -1,14 +1,17 @@
 """
-Project Name: 
-File Name: enums.py
+Project Name: BoardGame
+File Name: board.py
 Author: Lex Hall
-Last Updated: 
+Last Updated: 7/29/19
 Python Version: 3.6
 """
 
 import tile
 from enums import *
 
+''' CLASS Board
+Contains the array of tiles that comprise the board itself.
+'''
 class Board(object):
     def __init__(self):
         # row(left A-J) by column(top 1-10)
@@ -17,7 +20,7 @@ class Board(object):
         for i in range(10):
             for j in range(10):
                 self.boardGrid[i][j] = tile.Tile()
-        # Set Special Tiles
+        # Set Special Rules Tiles
         # Red (Top)
         self.boardGrid[0][3].setBase(TeamColor.RED)
         self.boardGrid[0][4].setBase(TeamColor.RED)
@@ -39,30 +42,28 @@ class Board(object):
         self.boardGrid[5][0].setBase(TeamColor.GREEN)
         self.boardGrid[6][0].setBase(TeamColor.GREEN)
         # Victory Points (Center)
-        self.boardGrid[4][4].setVictoryPoint()
-        self.boardGrid[5][5].setVictoryPoint()
+        self.boardGrid[4][4].isVictoryPoint = True
+        self.boardGrid[5][5].isVictoryPoint = True
         # Research Points (Center)
-        self.boardGrid[4][5].setResearch()
-        self.boardGrid[5][4].setResearch()
+        self.boardGrid[4][5].isResearch = True
+        self.boardGrid[5][4].isResearch = True
 
-    # TODO Remove all Getters and Setters (replace with properities)
-    def getBoardGrid(self):
-        return self.boardGrid
-
+    ### Calls each of the center tiles Attrition function passing the turns current player
     def applyAttrition(self, player):
         self.boardGrid[4][4].applyAttrition(player)
         self.boardGrid[5][5].applyAttrition(player)
         self.boardGrid[4][5].applyAttrition(player)
         self.boardGrid[5][4].applyAttrition(player)
 
+    # TODO Add check for home base or captured base and capture only captured or all bases
     def baseCapture(self, transferFrom, transferTo):
         for i in range(10):
             for j in range(10):
-                if self.boardGrid[i][j].getTeamColor() == transferFrom:
-                    if self.boardGrid[i][j].getIsBase():
+                if self.boardGrid[i][j].color == transferFrom:
+                    if self.boardGrid[i][j].isBase:
                         self.boardGrid[i][j].setCapturedBase(transferTo)
                     else:
-                        self.boardGrid[i][j].removeTroops(self.boardGrid[i][j].getTroopCount())
+                        self.boardGrid[i][j].removeTroops(self.boardGrid[i][j].troopCount)
     
     def displayBoard(self):
         row = 0
